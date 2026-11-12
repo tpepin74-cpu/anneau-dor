@@ -1,0 +1,78 @@
+{
+  "method": "Built-in image generation, 3 November 2026",
+  "common": "Editorial macro jewellery photograph for an artisan portfolio. Portrait 4:5, pale warm ivory plaster, soft diffused daylight, natural shadows, generous margins, realistic handmade surface, no text, logos, props or hands. Fictitious illustrative jewellery, not actual atelier creations.",
+  "assets": [
+    {
+      "name": "aube",
+      "prompt": "One delicate handmade yellow gold engagement solitaire ring, single round clear diamond in four fine prongs, gently organic slender polished shank, ring standing at a three quarter angle on pale warm ivory plaster.",
+      "files": [
+        "public/assets/creations/aube-640.webp",
+        "public/assets/creations/aube-1280.webp"
+      ]
+    },
+    {
+      "name": "liens",
+      "prompt": "Two handmade wedding bands together, one narrow gently rounded polished yellow gold band and one wider brushed yellow gold band, lightly overlapping, no stones, photographed at a low three quarter angle on warm ivory plaster.",
+      "files": [
+        "public/assets/creations/liens-640.webp",
+        "public/assets/creations/liens-1280.webp"
+      ]
+    },
+    {
+      "name": "sillage",
+      "prompt": "One masculine handcrafted silver signet ring, slightly softened rectangular flat face with tiny hammered texture, no engraving, substantial rounded shoulders, elegant imperfect artisan finish, lying on warm ivory plaster.",
+      "files": [
+        "public/assets/creations/sillage-640.webp",
+        "public/assets/creations/sillage-1280.webp"
+      ]
+    },
+    {
+      "name": "feuille",
+      "prompt": "One handmade yellow gold ring with an oval deep forest green emerald in a delicate bezel setting, slender organic band, standing at a three quarter angle on pale ivory plaster.",
+      "files": [
+        "public/assets/creations/feuille-640.webp",
+        "public/assets/creations/feuille-1280.webp"
+      ]
+    },
+    {
+      "name": "lune",
+      "prompt": "One fine handmade yellow gold necklace with a small irregularly round freshwater pearl pendant, fine chain gently laid in an open oval curve, on warm ivory plaster, overhead photograph.",
+      "files": [
+        "public/assets/creations/lune-640.webp",
+        "public/assets/creations/lune-1280.webp"
+      ]
+    },
+    {
+      "name": "rosee",
+      "prompt": "One pair of elegant small handmade yellow gold drop earrings, each with a softly irregular white freshwater pearl, fine curved gold hooks, arranged side by side on pale ivory plaster, overhead photograph.",
+      "files": [
+        "public/assets/creations/rosee-640.webp",
+        "public/assets/creations/rosee-1280.webp"
+      ]
+    },
+    {
+      "name": "trace",
+      "prompt": "One artisanal silver open cuff bracelet, slim broad hammered ribbon, subtly irregular edges, sculptural elegant unisex form, standing on warm ivory plaster, three quarter angle.",
+      "files": [
+        "public/assets/creations/trace-640.webp",
+        "public/assets/creations/trace-1280.webp"
+      ]
+    },
+    {
+      "name": "aurore",
+      "prompt": "One handmade rose gold ring with a small oval soft pink sapphire bezel set horizontally, slender softly hammered rose gold band, standing at three quarter angle on warm ivory plaster.",
+      "files": [
+        "public/assets/creations/aurore-640.webp",
+        "public/assets/creations/aurore-1280.webp"
+      ]
+    },
+    {
+      "name": "memoire",
+      "prompt": "One handmade yellow gold pendant necklace, small circular brushed gold medallion with a tiny round dark blue sapphire inset off centre, thin fine gold chain laid in an open loose oval, overhead photo on ivory plaster.",
+      "files": [
+        "public/assets/creations/memoire-640.webp",
+        "public/assets/creations/memoire-1280.webp"
+      ]
+    }
+  ]
+}

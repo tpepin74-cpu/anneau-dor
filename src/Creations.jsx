@@ -1,0 +1,59 @@
+const base=import.meta.env.BASE_URL;
+import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, ArrowLeft, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
+import './creations.css';
+
+export const creations = [
+  {id:'aube',name:'Aube',type:'Bagues',kind:'Solitaire',material:'Or jaune',stone:'Diamant',audience:['Femme'],occasions:['Fiançailles'],description:'Une ligne fine, une pierre et la lumière qui circule. Un solitaire imaginé autour de la simplicité d’un premier oui.',detail:'Un anneau délicatement irrégulier, un diamant rond et quatre griffes fines qui laissent la pierre respirer.',alt:'Exemple généré : bague solitaire en or jaune avec un diamant rond.'},
+  {id:'liens',name:'Liens',type:'Alliances',kind:'Duo d’alliances',material:'Or jaune',stone:'Sans pierre',audience:['Femme','Homme','Mixte'],occasions:['Mariage'],description:'Deux anneaux, deux façons de capter la lumière. Une même matière pour deux personnalités qui se répondent.',detail:'Une alliance fine et polie accompagne un anneau plus large à la finition brossée. Des formes simples, pensées pour le quotidien.',alt:'Exemple généré : deux alliances artisanales en or jaune, l’une polie et l’autre brossée.'},
+  {id:'feuille',name:'Feuille',type:'Bagues',kind:'Bague émeraude',material:'Or jaune',stone:'Émeraude',audience:['Femme'],occasions:['Anniversaire','Pour soi'],description:'Un vert profond, comme un petit morceau de jardin. La couleur donne le ton, le métal en suit les contours.',detail:'Une pierre ovale entourée d’un serti clos, sur un anneau fin dont la surface garde un relief discret.',alt:'Exemple généré : bague en or jaune avec une émeraude ovale en serti clos.'},
+  {id:'sillage',name:'Sillage',type:'Bagues',kind:'Chevalière',material:'Argent',stone:'Sans pierre',audience:['Homme'],occasions:['Anniversaire','Transmission','Pour soi'],description:'Une présence douce, un relief que les doigts reconnaissent. L’esprit d’une chevalière, avec la liberté du geste.',detail:'Un plateau aux angles arrondis, des épaules généreuses et une finition martelée qui accroche la lumière.',alt:'Exemple généré : chevalière en argent avec une surface martelée et des contours arrondis.'},
+  {id:'lune',name:'Petite lune',type:'Colliers',kind:'Pendentif perle',material:'Or jaune',stone:'Perle',audience:['Femme'],occasions:['Naissance','Anniversaire'],description:'Une perle, suspendue à un fil d’or. Un détail léger pour accompagner les moments que l’on veut garder près de soi.',detail:'Une perle blanche à la forme naturelle et une chaîne fine. L’irrégularité devient le point de départ du bijou.',alt:'Exemple généré : collier fin en or jaune avec un pendentif en perle blanche.'},
+  {id:'rosee',name:'Rosée',type:'Boucles d’oreilles',kind:'Boucles pendantes',material:'Or jaune',stone:'Perle',audience:['Femme'],occasions:['Mariage','Anniversaire'],description:'Deux petites touches de lumière qui suivent le mouvement. Des perles proches, sans être tout à fait identiques.',detail:'Des crochets d’or dessinés en courbe et deux perles blanches, pour une silhouette aérienne et naturelle.',alt:'Exemple généré : paire de boucles d’oreilles pendantes en or jaune et perles blanches.'},
+  {id:'trace',name:'Trace',type:'Bracelets',kind:'Manchette',material:'Argent',stone:'Sans pierre',audience:['Femme','Homme','Mixte'],occasions:['Anniversaire','Pour soi'],description:'Le métal porte la mémoire du geste. Un bracelet ouvert, libre et légèrement irrégulier, à apprivoiser chaque jour.',detail:'Une manchette en argent martelé aux bords adoucis. Sa surface vivante révèle les nuances de la lumière.',alt:'Exemple généré : bracelet manchette ouvert en argent martelé.'},
+  {id:'aurore',name:'Aurore',type:'Bagues',kind:'Bague saphir rose',material:'Or rose',stone:'Saphir',audience:['Femme'],occasions:['Fiançailles','Naissance','Anniversaire'],description:'La douceur d’un rose, la chaleur d’un métal. Une idée de bague délicate qui laisse toute sa place à la couleur.',detail:'Un saphir rose ovale posé à l’horizontale dans un serti clos, avec un anneau d’or rose subtilement martelé.',alt:'Exemple généré : bague en or rose avec un saphir rose ovale.'},
+  {id:'memoire',name:'Mémoire',type:'Colliers',kind:'Médaille saphir',material:'Or jaune',stone:'Saphir',audience:['Femme','Homme','Mixte'],occasions:['Transmission','Naissance'],description:'Un petit cercle d’or et une touche de bleu. L’idée d’un souvenir que l’on porte, puis que l’on transmet.',detail:'Une médaille brossée, un saphir discret placé de côté et une chaîne légère. Un équilibre volontairement asymétrique.',alt:'Exemple généré : médaille ronde en or jaune brossé avec un petit saphir bleu, sur une chaîne.'}
+];
+
+const types=['Toutes','Bagues','Alliances','Colliers','Boucles d’oreilles','Bracelets'];
+const filters=[
+  {key:'occasion',label:'L’occasion',all:'Toutes les occasions',values:['Fiançailles','Mariage','Anniversaire','Naissance','Transmission','Pour soi']},
+  {key:'audience',label:'Pour qui ?',all:'Tout le monde',values:['Femme','Homme','Mixte']},
+  {key:'material',label:'La matière',all:'Toutes les matières',values:['Or jaune','Or rose','Argent']},
+  {key:'stone',label:'La pierre',all:'Toutes les pierres',values:['Diamant','Émeraude','Saphir','Perle','Sans pierre']}
+];
+const emptyFilters={type:'Toutes',occasion:'',audience:'',material:'',stone:''};
+
+function CreationImage({piece,priority=false,detail=false}){
+  return <img src={`${base}assets/creations/${piece.id}-1280.webp`} srcSet={`${base}assets/creations/${piece.id}-640.webp 640w, ${base}assets/creations/${piece.id}-1280.webp 1280w`} sizes={detail?'(max-width: 700px) 90vw, 480px':'(max-width: 600px) 86vw, (max-width: 1000px) 44vw, 29vw'} width="1122" height="1402" alt={piece.alt} loading={priority?'eager':'lazy'} decoding="async"/>;
+}
+
+export default function Creations({Dialog,onContact}){
+  const [selected,setSelected]=useState(emptyFilters);
+  const [detail,setDetail]=useState(null);
+  const reduced=useReducedMotion();
+  const update=(key,value)=>setSelected(current=>({...current,[key]:value}));
+  const active=Object.entries(selected).filter(([key,value])=>value && !(key==='type'&&value==='Toutes'));
+  const shown=creations.filter(p=>(selected.type==='Toutes'||p.type===selected.type)&&(!selected.occasion||p.occasions.includes(selected.occasion))&&(!selected.audience||p.audience.includes(selected.audience))&&(!selected.material||p.material===selected.material)&&(!selected.stone||p.stone===selected.stone));
+  return <>
+    <main id="main" className="creations-page">
+      <section className="creations-intro" aria-labelledby="creations-title">
+        <a className="creations-back" href={`${base}#accueil`}><ArrowLeft size={13}/> Retour à l’atelier</a>
+        <div className="creations-intro-grid"><div><span className="eyebrow">LE CARNET DES BIJOUX</span><h1 id="creations-title">Mes <em>créations.</em></h1></div><div className="creations-intro-copy"><p>Une envie, une rencontre, une forme singulière.<br/>Des bijoux pour les grands jours,<br/>et pour tous les autres.</p><span className="creations-handwritten">À chacun, son histoire.</span></div></div>
+        <p className="creations-disclosure">Sélection illustrative · Ces neuf bijoux et leurs images ont été générés pour présenter la galerie. Ils ne sont pas des réalisations réelles de l’atelier.</p>
+      </section>
+
+      <section className="creations-collection" aria-label="Galerie des créations">
+        <div className="creation-types" role="group" aria-label="Type de bijou">{types.map(type=><button key={type} aria-pressed={selected.type===type} onClick={()=>update('type',type)}>{type}<span>{type==='Toutes'?creations.length:creations.filter(p=>p.type===type).length}</span></button>)}</div>
+        <div className="creation-filters" role="group" aria-label="Affiner les créations"><div className="filter-intro"><SlidersHorizontal size={15} strokeWidth={1.3}/><span>Au fil de vos envies</span></div>{filters.map(filter=><label key={filter.key} className="creation-select"><span>{filter.label}</span><div><select value={selected[filter.key]} onChange={e=>update(filter.key,e.target.value)}><option value="">{filter.all}</option>{filter.values.map(value=><option key={value} value={value}>{value}</option>)}</select><ChevronDown size={13} aria-hidden="true"/></div></label>)}</div>
+        <div className="creation-results-bar"><p role="status" aria-live="polite" aria-atomic="true">{shown.length} {shown.length===1?'création':'créations'}{active.length?' à découvrir':' à explorer'}</p><div className="creation-active-filters">{active.map(([key,value])=><button key={key} onClick={()=>update(key,key==='type'?'Toutes':'')} aria-label={`Retirer le filtre ${value}`}>{value}<X size={11}/></button>)}{active.length>0&&<button className="creation-reset" onClick={()=>setSelected(emptyFilters)}>Tout effacer</button>}</div></div>
+
+        {shown.length ? <div className="creation-grid">{shown.map((piece,index)=><motion.article className="creation-card" key={piece.id} initial={reduced?false:{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.45,delay:Math.min(index*.035,.16)}}><button className="creation-card-button" onClick={()=>setDetail(piece)} aria-label={`Découvrir ${piece.name}, ${piece.kind.toLowerCase()}`}><div className="creation-card-image"><CreationImage piece={piece} priority={index<3}/><span className="creation-view">Voir le bijou <ArrowUpRight size={15}/></span></div><div className="creation-card-caption"><div><span className="creation-kind">{piece.kind}</span><h2>{piece.name}</h2><p>{piece.material}{piece.stone!=='Sans pierre'?` · ${piece.stone}`:''}</p></div><ArrowUpRight className="creation-card-arrow" size={22} strokeWidth={1}/></div></button></motion.article>)}</div> : <div className="creation-empty"><span className="eyebrow">UNE AUTRE PISTE ?</span><h2>Une envie encore <em>à imaginer.</em></h2><p>Aucun exemple ne réunit ces critères pour le moment.<br/>Essayez une sélection plus large, ou parlons de votre idée.</p><button className="text-link" onClick={()=>setSelected(emptyFilters)}>Revoir toutes les créations <ArrowUpRight size={16}/></button><button className="text-link" onClick={()=>onContact()}>Parler de mon envie <ArrowUpRight size={16}/></button></div>}
+      </section>
+
+      <section className="creations-invitation"><span className="eyebrow">LA PROCHAINE HISTOIRE</span><h2>Et si c’était<br/><em>la vôtre ?</em></h2><p>Un détail vous attire, une matière vous parle ?<br/>C’est parfois tout ce qu’il faut pour commencer.</p><button className="meeting-link" onClick={()=>onContact()}>Imaginons votre bijou <span><ArrowUpRight size={17}/></span></button><a className="creations-story-link" href={`${base}#histoire`}>Suivre le fil d’une création <ArrowUpRight size={13}/></a></section>
+    </main>
+    {detail&&<Dialog close={()=>setDetail(null)} title={`Création illustrative : ${detail.name}`} className="creation-dialog"><div className="creation-detail-image"><CreationImage piece={detail} priority detail/></div><div className="creation-detail-copy"><span className="eyebrow">LE CARNET · EXEMPLE ILLUSTRATIF</span><h2>{detail.name}</h2><p className="creation-detail-kind">{detail.kind}</p><p>{detail.description}</p><p>{detail.detail}</p><dl><div><dt>Matière</dt><dd>{detail.material}</dd></div><div><dt>Pierre</dt><dd>{detail.stone}</dd></div><div><dt>Occasion</dt><dd>{detail.occasions.join(' · ')}</dd></div><div><dt>Pour qui</dt><dd>{detail.audience.includes('Mixte')?'Mixte':detail.audience.join(' · ')}</dd></div></dl><button className="text-link" onClick={()=>{setDetail(null);onContact(detail.name);}}>Une envie dans cet esprit ? <ArrowUpRight size={16}/></button><p className="creation-detail-note">Image générée et bijou fictif, proposés pour illustrer cette page. Toute création à l’atelier commence par un échange.</p></div></Dialog>}
+  </>;
+}
